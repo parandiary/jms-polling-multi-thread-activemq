@@ -1,0 +1,21 @@
+
+
+spring:
+   application:
+      name: Demo1
+   profiles:
+      active: #spring.profiles.active#
+      group:
+         dev:
+            - dev
+           #- api-docs
+           # Uncomment to activate TLS for the dev profile
+           #- tls
+#   jmx:
+#      enabled: false
+   output:
+      ansi:
+         console-available: false
+  
+
+

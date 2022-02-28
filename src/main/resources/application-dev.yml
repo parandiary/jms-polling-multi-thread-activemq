@@ -1,0 +1,62 @@
+# ===================================================================
+# Spring Boot configuration for the "dev" profile.
+#
+# This configuration overrides the application.yml file.
+#
+# More information on profiles: https://www.jhipster.tech/profiles/
+# More information on configuration properties: https://www.jhipster.tech/common-application-properties/
+# ===================================================================
+
+# ===================================================================
+# Standard Spring Boot properties.
+# Full reference is available at:
+# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+# ===================================================================
+
+logging:
+   level:
+      ROOT: DEBUG
+      #tech.jhipster: DEBUG
+      org.hibernate.SQL: DEBUG
+      com.e1.ims: DEBUG
+
+spring:
+   devtools:
+      restart:
+         enabled: true
+         additional-exclude: static/**
+      livereload:
+         enabled: false # we use Webpack dev server + BrowserSync for livereload
+   jackson:
+      serialization:
+         indent-output: true
+   datasource:
+      type: com.zaxxer.hikari.HikariDataSource
+      url: jdbc:postgresql://192.168.1.220:5433/custom_rms6_cn_dev?currentSchema=public
+      username: rnd
+      password: rnd
+      hikari:
+         poolName: rms-local-dev
+         auto-commit: false
+         maximum-pool-size: 10
+         
+   activemq:
+      #broker-url: tcp://192.168.1.203:61616
+      broker-url: failover:(tcp://192.168.1.203:61616,tcp://192.168.1.203:61616) 
+      user:
+      password: 
+      
+   jms:
+      pub-sub-domain: false
+      template:
+         receive-timeout: 500ms
+         
+tracker:
+   min-pool-size: 5
+   max-pool-size: 200
+   queue-size: 15
+   
+         
+         
+
+   
