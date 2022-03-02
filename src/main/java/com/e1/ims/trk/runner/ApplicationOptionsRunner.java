@@ -1,9 +1,11 @@
-package com.e1.ims.trk.component;
+package com.e1.ims.trk.runner;
 
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+
+import com.e1.ims.trk.Demo1Application;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -12,14 +14,18 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ApplicationOptionsRunner implements ApplicationRunner  {
 
-	//private static final Logger log = LoggerFactory.getLogger(ApplicationOptionsRunner.class);
-
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
 
 		log.info("Argument Check runner1");
 		System.out.println("sysout : argument check");
+
+
+		//profile check
+		if(args.getNonOptionArgs().size() > 0) Demo1Application.PROFILE = args.getNonOptionArgs().get(0);
+		else Demo1Application.PROFILE = "DEV";
+		log.debug("ApplicationRunner PROFILE {} checked ", Demo1Application.PROFILE);
 
 
 		// check Program Argument
@@ -37,9 +43,13 @@ public class ApplicationOptionsRunner implements ApplicationRunner  {
         // check JVM Argument
         System.out.println("JVM argument TRK_HOME : "+ System.getProperty("TRK_HOME"));
 		System.out.println("JVM argument tracker_name : "+ System.getProperty("tracker_name"));
+        System.out.println("env IMS_HOME : "+ System.getenv("IMS_HOME"));
 
-
-
+//        if(!args.containsOption("start")) {
+//        	System.out.println("start가 없어 종료함.");
+//        	log.info("start가 없어 종료함.");
+//        	System.exit(-1);
+//        }
 
 	}
 

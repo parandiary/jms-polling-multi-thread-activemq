@@ -52,9 +52,17 @@ spring:
          receive-timeout: 500ms
          
 tracker:
+   #pool-size만큼의 thread에서 message를 polling하여 수행
+   pool-size: 5
    min-pool-size: 5
-   max-pool-size: 200
-   queue-size: 15
+   max-pool-size: 20
+   queue-size: 5
+   tracker-queue-name: RMS.LQ
+   dbproc:
+      min-pool-size: 5
+      max-pool-size: 50 # db connection pool - 10%
+      queue-size: 15  # min * 5
+      
    
          
          

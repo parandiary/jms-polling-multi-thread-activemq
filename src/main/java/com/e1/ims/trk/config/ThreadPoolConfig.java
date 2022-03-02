@@ -10,7 +10,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 @Configuration
 @EnableAsync
-public class TrackerThreadConfiguration {
+public class ThreadPoolConfig {
 
 	@Value("${tracker.min-pool-size}")
     private int minPoolSize;
@@ -22,8 +22,18 @@ public class TrackerThreadConfiguration {
 	private int queueSize;
 
 
-	@Bean(name = "logServiceExecutor")
-	public ThreadPoolTaskExecutor threadPoolTaskExecutor() {
+	@Value("${tracker.dbproc.min-pool-size}")
+	private int minDbPoolSize;
+
+	@Value("${tracker.dbproc.max-pool-size}")
+	private int maxDbPoolSize;
+
+	@Value("${tracker.dbproc.queue-size}")
+	private int dbQueueSize;
+
+
+	@Bean(name = "trackerThreadPoolTaskExecutor")
+	public ThreadPoolTaskExecutor trackerThreadPoolTaskExecutor() {
 
 		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
 		executor.setCorePoolSize(minPoolSize);
@@ -34,6 +44,27 @@ public class TrackerThreadConfiguration {
 		//executor.setThreadNamePrefix("Tracker_Execute_Thread-");
 
 		executor.setThreadNamePrefix("Tracker_Thread-");
+		executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy()); //가용 Thread가 없을 경우 자기 자신의 Thread 활용
+		executor.setWaitForTasksToCompleteOnShutdown(true); // 처리하는 Thread 처리 완료 후 종료
+		executor.setAwaitTerminationSeconds(60); // shutdown 최대 60초 대기
+		executor.initialize();
+
+		return executor;
+	}
+
+
+	@Bean(name = "dbProcThreadPoolTaskExecutor")
+	public ThreadPoolTaskExecutor dbProcThreadPoolTaskExecutor() {
+
+		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+		executor.setCorePoolSize(minDbPoolSize);
+		executor.setMaxPoolSize(maxDbPoolSize);
+		executor.setQueueCapacity(dbQueueSize);
+		executor.setAllowCoreThreadTimeOut(false); // Core Thread도 종료 할지
+		executor.setKeepAliveSeconds(20); // Thread 유지시간
+		//executor.setThreadNamePrefix("Tracker_Execute_Thread-");
+
+		executor.setThreadNamePrefix("DB_Thread-");
 		executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy()); //가용 Thread가 없을 경우 자기 자신의 Thread 활용
 		executor.setWaitForTasksToCompleteOnShutdown(true); // 처리하는 Thread 처리 완료 후 종료
 		executor.setAwaitTerminationSeconds(60); // shutdown 최대 60초 대기

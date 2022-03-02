@@ -7,8 +7,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 
-import com.e1.ims.trk.activemq.ActivemqReciver;
-
 @Configuration
 @EnableJms
 public class ActivemqConfiguration {
@@ -32,9 +30,9 @@ public class ActivemqConfiguration {
         return factory;
     }
 
-    @Bean
-    public ActivemqReciver receiver() {
-        return new ActivemqReciver();
-    }
+//    @Bean
+//    public ActivemqReciver receiver() {
+//        return new ActivemqReciver();
+//    }
 
 }

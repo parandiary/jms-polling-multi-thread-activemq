@@ -1,4 +1,4 @@
-package com.e1.ims.trk.component;
+package com.e1.ims.trk.runner;
 
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;

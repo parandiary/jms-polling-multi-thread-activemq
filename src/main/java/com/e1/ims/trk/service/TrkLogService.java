@@ -6,11 +6,11 @@ import org.springframework.scheduling.annotation.Async;
 
 public interface TrkLogService {
 
-	@Async("logServiceExecutor")
-    void test(String param) throws Exception;
+	@Async("dbProcThreadPoolTaskExecutor")
+    void insertRmLog(List messages) throws Exception;
 
-	@Async("logServiceExecutor")
-	void bulk(List messages) throws Exception;
+	@Async("dbProcThreadPoolTaskExecutor")
+	void insertRmLogBuf(List messages) throws Exception;
 
 	void syncTest(String param) throws Exception;
 
