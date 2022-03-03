@@ -6,7 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import com.e1.ims.trk.service.TrackerService;
+import com.e1.ims.trk.executer.TrackerExecutor;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -19,7 +19,7 @@ public class TrackerRunner implements CommandLineRunner {
 	private int poolSize;
 
 	@Autowired
-	private TrackerService trackerService;
+	private TrackerExecutor trackerExecutor;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -28,7 +28,7 @@ public class TrackerRunner implements CommandLineRunner {
 		for(int i = 0 ; i < poolSize ; i++) {
     		// thread 실행
 			String param = ""+i;
-			trackerService.asyncProcTracker(param);
+			trackerExecutor.asyncProcTracker(param);
 
     	}
 

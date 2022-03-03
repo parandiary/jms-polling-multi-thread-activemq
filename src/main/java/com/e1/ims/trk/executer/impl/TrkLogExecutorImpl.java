@@ -1,15 +1,17 @@
-package com.e1.ims.trk.service.impl;
+package com.e1.ims.trk.executer.impl;
 
 import java.util.List;
 
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import com.e1.ims.trk.service.TrkLogService;
+
+import com.e1.ims.trk.executer.TrkLogExecutor;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-public class TrkLogServiceImpl implements TrkLogService {
+public class TrkLogExecutorImpl implements TrkLogExecutor {
 
 	@Override
 	public void syncTest(String param) throws Exception {

@@ -1,10 +1,10 @@
-package com.e1.ims.trk.service;
+package com.e1.ims.trk.executer;
 
 import java.util.List;
 
 import org.springframework.scheduling.annotation.Async;
 
-public interface TrkLogService {
+public interface TrkLogExecutor {
 
 	@Async("dbProcThreadPoolTaskExecutor")
     void insertRmLog(List messages) throws Exception;

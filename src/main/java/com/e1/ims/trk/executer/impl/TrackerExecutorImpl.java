@@ -1,4 +1,4 @@
-package com.e1.ims.trk.service.impl;
+package com.e1.ims.trk.executer.impl;
 
 import java.util.ArrayList;
 
@@ -17,20 +17,20 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.e1.ims.trk.Demo1Application;
-import com.e1.ims.trk.service.TrackerService;
-import com.e1.ims.trk.service.TrkLogService;
+import com.e1.ims.trk.executer.TrackerExecutor;
+import com.e1.ims.trk.executer.TrkLogExecutor;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class TrackerServiceImpl implements TrackerService {
+public class TrackerExecutorImpl implements TrackerExecutor {
 
 	@Autowired
 	private ActiveMQConnectionFactory connectionFactory;
 
 	@Autowired
-	private TrkLogService trkLogService;
+	private TrkLogExecutor trkLogExecutor;
 
 
 	@Value("${tracker.tracker-queue-name}")
@@ -80,8 +80,8 @@ public class TrackerServiceImpl implements TrackerService {
 					log.debug("paramMessages {}", paramMessages);
 
 					// database insert를 위한 thread 수행
-					trkLogService.insertRmLog(paramMessages);
-					trkLogService.insertRmLogBuf(paramMessages);
+					trkLogExecutor.insertRmLog(paramMessages);
+					trkLogExecutor.insertRmLogBuf(paramMessages);
 
 				}
 
