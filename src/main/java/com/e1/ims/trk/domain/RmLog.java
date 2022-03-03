@@ -1,6 +1,7 @@
 package com.e1.ims.trk.domain;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -148,9 +149,11 @@ public class RmLog implements Serializable {
     @Column(name = "msg")
     private String msg;
 
-    @Size(max = 7)
-    @Column(name = "insert_dt", length = 7)
-    private String insertDt;
+    //@Size(max = 7)
+    //@Column(name = "insert_dt", length = 7)
+    @Column(name = "insert_dt")
+    private Instant insertDt = Instant.now();
+    //private String insertDt;
 
     @Size(max = 1)
     @Column(name = "flag", length = 1)
@@ -209,8 +212,8 @@ public class RmLog implements Serializable {
     private String rcol13;
 
     @NotNull
-    @Size(max = 1)
-    @Column(name = "trkmst_key", length = 1, nullable = false)
+    @Size(max = 2)
+    @Column(name = "trkmst_key", length = 2, nullable = false)
     private String trkmstKey;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -585,16 +588,16 @@ public class RmLog implements Serializable {
         this.msg = msg;
     }
 
-    public String getInsertDt() {
+    public Instant getInsertDt() {
         return insertDt;
     }
 
-    public RmLog insertDt(String insertDt) {
+    public RmLog insertDt(Instant insertDt) {
         this.insertDt = insertDt;
         return this;
     }
 
-    public void setInsertDt(String insertDt) {
+    public void setInsertDt(Instant insertDt) {
         this.insertDt = insertDt;
     }
 

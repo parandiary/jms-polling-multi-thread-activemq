@@ -31,6 +31,8 @@
         <spring-boot.version>2.6.4</spring-boot.version>
 		<log4j2.version>2.17.1</log4j2.version>
 		<mapstruct.version>1.4.2.Final</mapstruct.version>
+		<hibernate.version>5.6.4.Final</hibernate.version>
+		<jaxb-runtime.version>2.3.3</jaxb-runtime.version>
 		<!-- <start-class>com.e1.ims.trk.TrkApplication</start-class> -->
 		<ibm.mq.lib.version>9.0.3.0</ibm.mq.lib.version>
 
@@ -147,14 +149,26 @@
 
 
 		<dependency>
-            <groupId>com.zaxxer</groupId>
-            <artifactId>HikariCP</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <scope>provided</scope>
-        </dependency>
+			<groupId>com.zaxxer</groupId>
+			<artifactId>HikariCP</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.el</groupId>
+			<artifactId>javax.el-api</artifactId>
+			<version>3.0.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish</groupId>
+			<artifactId>javax.el</artifactId>
+			<version>3.0.0</version>
+		</dependency>
 
 
 
@@ -227,7 +241,7 @@
                                 <version>${mapstruct.version}</version>
                             </path>
                             <!-- For JPA static metamodel generation -->
-                            <!-- <path>
+                            <path>
                                 <groupId>org.hibernate</groupId>
                                 <artifactId>hibernate-jpamodelgen</artifactId>
                                 <version>${hibernate.version}</version>
@@ -236,7 +250,7 @@
                                 <groupId>org.glassfish.jaxb</groupId>
                                 <artifactId>jaxb-runtime</artifactId>
                                 <version>${jaxb-runtime.version}</version>
-                            </path> -->
+                            </path>
                         </annotationProcessorPaths>
                     </configuration>
                 </plugin>

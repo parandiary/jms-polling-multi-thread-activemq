@@ -15,10 +15,11 @@
 
 logging:
    level:
-      ROOT: DEBUG
-      #tech.jhipster: DEBUG
-      org.hibernate.SQL: DEBUG
+      ROOT: INFO
+      org.hibernate.SQL: WARN
       com.e1.ims: DEBUG
+      com.zaxxer: INFO
+      org.hibernate: INFO
 
 spring:
    devtools:
@@ -30,6 +31,10 @@ spring:
    jackson:
       serialization:
          indent-output: true
+   jpa:
+      #database-platform: io.github.jhipster.domain.util.FixedPostgreSQL10Dialect
+      database-platform: org.hibernate.dialect.PostgreSQLDialect
+      show-sql: false
    datasource:
       type: com.zaxxer.hikari.HikariDataSource
       url: jdbc:postgresql://192.168.1.220:5433/custom_rms6_cn_dev?currentSchema=public
@@ -38,7 +43,9 @@ spring:
       hikari:
          poolName: rms-local-dev
          auto-commit: false
-         maximum-pool-size: 10
+         # test 2,2  5,5 50,50
+         min-pool-size : 60 
+         maximum-pool-size: 60
          
    activemq:
       #broker-url: tcp://192.168.1.203:61616
@@ -53,15 +60,18 @@ spring:
          
 tracker:
    #pool-size만큼의 thread에서 message를 polling하여 수행
-   pool-size: 5
-   min-pool-size: 5
-   max-pool-size: 20
-   queue-size: 5
+   pool-size: 3 #5
+   min-pool-size: 3 #5
+   max-pool-size: 3 #20
+   queue-size: 3 #5
    tracker-queue-name: RMS.LQ
    dbproc:
-      min-pool-size: 5
-      max-pool-size: 50 # db connection pool - 10%
-      queue-size: 15  # min * 5
+      min-pool-size: 30
+      max-pool-size: 30 # db connection pool - 10%
+      queue-size: 30  # min * 5
+   commit-cnt: 500
+   ## pool size는 클 필요가 없고
+   ## commit-cnt를 크게 잡아서 로그에서 1초 혹은 2초내 처리가능한 DB 처리량을 참고하여 thread 와 db proc thread 를 산정해 본다.  
       
    
          
