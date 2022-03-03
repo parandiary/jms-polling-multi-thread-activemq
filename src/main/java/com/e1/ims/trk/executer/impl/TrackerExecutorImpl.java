@@ -39,6 +39,9 @@ public class TrackerExecutorImpl implements TrackerExecutor {
 	@Value("${tracker.tracker-queue-name}")
     private String trackerQueueName;
 
+	@Value("${tracker.jms-receive-timeout}")
+	private long jmsReciveTimeout;
+
 	@Value("${tracker.commit-cnt}")
 	private int commitCnt;
 
@@ -59,7 +62,7 @@ public class TrackerExecutorImpl implements TrackerExecutor {
 	public void asyncProcTracker(String param) {
 
 		String threadName = Thread.currentThread().getName();
-		log.info("Tracker thread[{}] start with param {} ",threadName, param);
+		log.info("Tracker thread[{}] start with param {} recive-time-out={} ",threadName, param, jmsReciveTimeout);
 
 		ArrayList<String> recivedMessages = new ArrayList<String>();
 
@@ -89,7 +92,7 @@ public class TrackerExecutorImpl implements TrackerExecutor {
 			while(!Demo1Application.STOP) {
 
 				// recive(waitTimeMs)
-				Message message = consumer.receive(1000);
+				Message message = consumer.receive(jmsReciveTimeout);
 				if (message instanceof TextMessage) {
 					TextMessage textMessage = (TextMessage) message;
 					//log.info("{} receive {}",threadName, textMessage.getText());
@@ -145,7 +148,10 @@ public class TrackerExecutorImpl implements TrackerExecutor {
 
 
 				//log.info("check message {}",!Demo1Application.STOP);
-				//Thread.sleep(1000);
+				//받은 메세지가 없을 경우 잠시 sleep
+				if(jmsReciveTimeout < 500 && "".equals(message.getJMSCorrelationID())){
+					Thread.sleep(1000);
+				}
 			}
 
 			if(consumer != null) consumer.close();
@@ -157,6 +163,9 @@ public class TrackerExecutorImpl implements TrackerExecutor {
 		} catch (JMSException e) {
 			//Handle the exception appropriately
 			log.error(e.getMessage());
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}finally {
 			try {
 				this.session.close();

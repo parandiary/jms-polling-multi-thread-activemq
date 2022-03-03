@@ -37,7 +37,7 @@ spring:
       show-sql: false
    datasource:
       type: com.zaxxer.hikari.HikariDataSource
-      url: jdbc:postgresql://192.168.1.220:5433/custom_rms6_cn_dev?currentSchema=public
+      url: jdbc:postgresql://192.168.1.220:5433/custom_rms6_cn_prd?currentSchema=public
       username: rnd
       password: rnd
       hikari:
@@ -59,12 +59,14 @@ spring:
          receive-timeout: 500ms
          
 tracker:
-   #pool-size만큼의 thread에서 message를 polling하여 수행
+   # 메세지 수신용 Thread
+   jms-receive-timeout: 500
    pool-size: 3 #5
    min-pool-size: 3 #5
    max-pool-size: 3 #20
    queue-size: 3 #5
    tracker-queue-name: RMS.LQ
+   # DB 처리용 Thread
    dbproc:
       min-pool-size: 30
       max-pool-size: 30 # db connection pool - 10%
