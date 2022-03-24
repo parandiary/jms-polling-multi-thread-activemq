@@ -45,8 +45,10 @@ public class TrackerExecutorImpl implements TrackerExecutor {
 	@Value("${tracker.commit-cnt}")
 	private int commitCnt;
 
-	private static int ackMode = Session.AUTO_ACKNOWLEDGE;
-    private boolean transacted = false;
+	//private static int ackMode = Session.AUTO_ACKNOWLEDGE; // 자동으로 메세지 수신
+	//private boolean transacted = true; // JMS 트랜잭션 사용여부
+	private static int ackMode = Session.AUTO_ACKNOWLEDGE; // 자동으로 메세지 수신
+	private boolean transacted = false; // JMS 트랜잭션 사용여부
     private Session session;
 
     int recivedMsgCnt = 0;
@@ -123,6 +125,8 @@ public class TrackerExecutorImpl implements TrackerExecutor {
 						// db pool 이 모자라는 현상
 						//Connection is not available, request timed out after 30006ms
 
+						//message.acknowledge();
+
 
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -144,7 +148,11 @@ public class TrackerExecutorImpl implements TrackerExecutor {
 
 					//testMsgCnt = 0;
 
+
+
 				}
+
+				//this.session.commit();
 
 
 				//log.info("check message {}",!Demo1Application.STOP);

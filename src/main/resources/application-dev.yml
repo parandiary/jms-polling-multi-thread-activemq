@@ -71,7 +71,8 @@ tracker:
       min-pool-size: 30
       max-pool-size: 30 # db connection pool - 10%
       queue-size: 30  # min * 5
-   commit-cnt: 500
+   commit-cnt: 100
+   #commit-cnt: 500
    ## pool size는 클 필요가 없고
    ## commit-cnt를 크게 잡아서 로그에서 1초 혹은 2초내 처리가능한 DB 처리량을 참고하여 thread 와 db proc thread 를 산정해 본다.  
       
